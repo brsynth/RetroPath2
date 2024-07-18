@@ -76,8 +76,16 @@ def _cli():
     # Create logger
     logger = create_logger(parser.prog, args.log)
 
+    # Enable path to workflow
+    if args.workflow is not None:
+        if not os_path.exists(args.workflow):
+            logger.error('The workflow file does not exist: %s' % (args.workflow,))
+            return 5
+    else:
+        here = os_path.dirname(os_path.realpath(__file__))
+        args.workflow = os_path.join(here, 'workflows', 'RetroPath2.0_%s.knwf' % (args.rp2_version,))
+
     # Create Knime object
-    here = os_path.dirname(os_path.realpath(__file__))
     if args.kplugins == "":
         kplugins = []
     else:
@@ -87,7 +95,7 @@ def _cli():
         kinstall=args.kinstall,
         kver=args.kver,
         kplugins=kplugins,
-        workflow=os_path.join(here, 'workflows', 'RetroPath2.0_%s.knwf' % (args.rp2_version,)),
+        workflow=args.workflow,
         network=not args.no_network,
     )
     # Print out configuration

@@ -147,6 +147,12 @@ def _add_arguments(parser):
         choices=['v9', 'r20210127', 'r20220104', "r20220224"],
         help=f'version of RetroPath2.0 workflow (default: {DEFAULTS["RP2_VERSION"]}).'
     )
+    parser_rp.add_argument(
+        '--workflow',
+        type=str,
+        default=None,
+        help='path to the RetroPath2.0 workflow file.'
+    )
 
     # No network option
     parser_rp.add_argument(
